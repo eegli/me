@@ -12,6 +12,7 @@ const query = `
           title
           url
           bodyHTML
+          body,
           author {
             login
           }

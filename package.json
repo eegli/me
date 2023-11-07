@@ -16,6 +16,7 @@
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
 		"@tailwindcss/typography": "^0.5.10",
+		"@types/markdown-it": "^13.0.6",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"autoprefixer": "^10.4.16",
@@ -37,6 +38,7 @@
 	"dependencies": {
 		"@octokit/graphql-schema": "^14.40.1",
 		"highlight.js": "^11.9.0",
+		"markdown-it": "^13.0.2",
 		"octokit": "^3.1.1"
 	}
 }
