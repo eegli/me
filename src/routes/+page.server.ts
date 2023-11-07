@@ -1,8 +1,7 @@
 import { Octokit } from 'octokit';
 import type { PageServerLoad } from './$types';
 import type { Repository } from '@octokit/graphql-schema';
-
-const octokit = new Octokit({ auth: import.meta.env.VITE_GH_AT });
+import { getPosts } from '../lib/api/get';
 
 const query = `
   query ($owner: String!, $name: String!) {
@@ -11,7 +10,6 @@ const query = `
         nodes {
           title
           url
-          bodyHTML
           body,
           author {
             login
@@ -24,10 +22,9 @@ const query = `
 `;
 
 export const load: PageServerLoad = async (request) => {
-	const { repository } = await octokit.graphql<{ repository: Repository }>(query, {
-		owner: 'eegli',
-		name: 'me'
-	});
+	const posts = await getPosts();
 
-	return repository.discussions;
+	return {
+		posts
+	};
 };

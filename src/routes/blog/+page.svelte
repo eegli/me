@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { md } from '../lib/utils/markdown';
+	import { md } from '../../lib/utils/markdown';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
