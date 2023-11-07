@@ -1,28 +1,10 @@
-import { Octokit } from 'octokit';
-import type { PageServerLoad } from './$types';
-import type { Repository } from '@octokit/graphql-schema';
 import { getPosts } from '../lib/api/get';
-
-const query = `
-  query ($owner: String!, $name: String!) {
-    repository(owner: $owner, name: $name) {
-      discussions(first: 10) {
-        nodes {
-          title
-          url
-          body,
-          author {
-            login
-          }
-          createdAt
-        }
-      }
-    }
-  }
-`;
+import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (request) => {
-	const posts = await getPosts();
+	const posts = await getPosts({
+		first: 10
+	});
 
 	return {
 		posts

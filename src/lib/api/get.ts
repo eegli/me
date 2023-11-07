@@ -1,33 +1,46 @@
 import type { Repository } from '@octokit/graphql-schema';
 import { octokit } from './client';
 
-export const getPosts = async () => {
+type GetPostsParams = {
+	first?: number;
+	after?: string;
+};
+
+export const getPosts = async ({ first, after }: GetPostsParams = {}) => {
 	const { repository } = await octokit.graphql<{ repository: Repository }>(
 		`
-    query ($owner: String!, $name: String!) {
-      repository(owner: $owner, name: $name) {
-        discussions(first: 10) {
-          nodes {
-            title
-            url
-            id
-            createdAt
-            publishedAt
-            updatedAt
-            bodyHTML
-            author {
-              login
+    query getDiscussions($first: Int = 1, $after: String) {
+      repository(owner: "eegli", name: "me") {
+        discussions(first: $first, after: $after, orderBy: {field: CREATED_AT, direction: DESC}) {
+          edges {
+            cursor
+            node {
+              id
+              category {
+                name,
+                id
+              }
+              title
+              author {
+                login
+              }
+              createdAt
             }
-            createdAt
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
           }
         }
       }
     }
+    
   `,
 		{
-			owner: 'eegli',
-			name: 'me'
+			first,
+			after
 		}
 	);
-	return repository.discussions.nodes || [];
+	console.log(repository.discussion);
+	return repository.discussions.edges || [];
 };
