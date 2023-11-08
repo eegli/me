@@ -1,12 +1,10 @@
-import { getPosts } from '../lib/api/get';
+import { getPosts } from '$api/get';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (request) => {
-	const posts = await getPosts({
-		first: 10
-	});
-
+	const { pageInfo, posts } = await getPosts();
 	return {
-		posts
+		posts,
+		pageInfo
 	};
 };

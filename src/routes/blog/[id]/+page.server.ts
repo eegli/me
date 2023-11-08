@@ -1,10 +1,10 @@
-import { getPosts } from '../../lib/api/get';
+import { getPostById } from '$api/get';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (request) => {
-	const posts = await getPosts();
-
+	const postId = request.params.id;
+	const post = await getPostById(postId);
 	return {
-		posts
+		post
 	};
 };
