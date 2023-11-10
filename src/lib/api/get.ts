@@ -1,4 +1,5 @@
 import type { Comment, Discussion, PageInfo, Repository } from '@octokit/graphql-schema';
+import { isPost } from '../store';
 import { octokit } from './client';
 
 type GetPostsParams = {
@@ -45,7 +46,12 @@ export const getPosts = async ({ first = 1, after }: GetPostsParams = {}) => {
 		}
 	);
 	return {
-		posts: repository.discussions.edges || [],
+		posts: (repository.discussions.edges || []).reduce((acc, edge) => {
+			if (edge && isPost(edge.node)) {
+				acc.push(edge.node);
+			}
+			return acc;
+		}, [] as Discussion[]),
 		pageInfo: repository.discussions.pageInfo
 	};
 };
