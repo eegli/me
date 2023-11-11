@@ -5,24 +5,17 @@
 
 	export let data: PageServerData;
 
-	$: for (const post of data.posts) {
-		$posts.set(post.id, post);
-		$posts = $posts;
-	}
+	posts.addMany(data.posts);
 	$pagination = data.pageInfo;
 
 	const loadNextPosts = async () => {
 		const { posts: newPosts, pageInfo } = await getPosts({ after: $pagination.endCursor! });
-		for (const newPost of newPosts) {
-			console.log(newPost);
-			$posts.set(newPost.id, newPost);
-		}
+		posts.addMany(newPosts);
 		$pagination = pageInfo;
-		$posts = $posts;
 	};
 </script>
 
-<main class="w-3/4 max-w-96 m-auto">
+<div class="w-3/4 max-w-96 m-auto">
 	<div class="flex flex-col items-stretch gap-2">
 		{#each $posts as [id, post] (id)}
 			<article class="prose prose-md bg-slate-800">
@@ -36,4 +29,4 @@
 	{#if $pagination.hasNextPage}
 		<button class="btn" on:click={loadNextPosts}>Load more posts</button>
 	{/if}
-</main>
+</div>
