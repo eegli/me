@@ -1,17 +1,11 @@
 <script lang="ts">
 	import { getPosts } from '$api/get';
 	import { pagination, posts } from '../lib/store';
-	import type { PageServerData } from './$types';
-
-	export let data: PageServerData;
-
-	posts.addMany(data.posts);
-	$pagination = data.pageInfo;
 
 	const loadNextPosts = async () => {
-		const { posts: newPosts, pageInfo } = await getPosts({ after: $pagination.endCursor! });
-		posts.addMany(newPosts);
-		$pagination = pageInfo;
+		const data = await getPosts({ after: $pagination.endCursor! });
+		posts.addMany(data.posts);
+		$pagination = data.pageInfo;
 	};
 </script>
 
