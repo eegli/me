@@ -5,7 +5,7 @@ import {
 	type NormalizedCacheObject
 } from '@apollo/client/core';
 
-export const githubClient: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+export const ghClient: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 	link: new HttpLink({
 		uri: 'https://api.github.com/graphql',
 		headers: {

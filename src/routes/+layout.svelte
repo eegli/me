@@ -1,14 +1,14 @@
 <script lang="ts">
+	import NavBar from '$comp/NavBar.svelte';
+	import { pinnedProjects, postsPagination, postsPreviews } from '$store';
 	import 'highlight.js/styles/github-dark-dimmed.min.css';
 	import '../app.css';
-	import NavBar from '../lib/components/NavBar.svelte';
-	import { postsPagination, postsPreviews } from '../lib/store';
 	import type { LayoutServerData } from './$types';
 
 	export let data: LayoutServerData;
 	postsPreviews.addMany(data.postPreviews);
 	$postsPagination = data.postsPagination;
-	console.log(data.projects);
+	$pinnedProjects = data.pinnedProjects;
 </script>
 
 <main class="min-w-2xl max-w-5xl mx-auto">

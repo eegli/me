@@ -8,24 +8,22 @@ import {
 	type GetDiscussionsQueryVariables,
 	type GetPinnedProjectsQuery
 } from '../../generated/queries';
-import { githubClient } from './client';
+import { ghClient } from './client';
 
-export type PostPreview = NonNullable<
-	NonNullable<
-		NonNullable<NonNullable<GetDiscussionsQuery['repository']>['discussions']['edges']>[number]
-	>['node']
+type NN<T> = NonNullable<T>;
+
+export type PostPreview = NN<
+	NN<NN<NN<GetDiscussionsQuery['repository']>['discussions']['edges']>[number]>['node']
 >;
 
-export type PostsPagination = NonNullable<
-	NonNullable<GetDiscussionsQuery['repository']>['discussions']['pageInfo']
->;
+export type PostsPagination = NN<NN<GetDiscussionsQuery['repository']>['discussions']['pageInfo']>;
 
-export type PinnedProject = NonNullable<
-	NonNullable<NonNullable<GetPinnedProjectsQuery['user']>['pinnedItems']['nodes']>[number]
+export type PinnedProject = NN<
+	NN<NN<GetPinnedProjectsQuery['user']>['pinnedItems']['nodes']>[number]
 >;
 
 export const getPostPreviews = async (params: GetDiscussionsQueryVariables) => {
-	const { data } = await githubClient.query<GetDiscussionsQuery>({
+	const { data } = await ghClient.query<GetDiscussionsQuery>({
 		query: GetDiscussionsDocument,
 		variables: params
 	});
@@ -38,7 +36,7 @@ export const getPostPreviews = async (params: GetDiscussionsQueryVariables) => {
 };
 
 export const getPost = async (params: GetDiscussionQueryVariables) => {
-	const { data } = await githubClient.query<GetDiscussionQuery>({
+	const { data } = await ghClient.query<GetDiscussionQuery>({
 		query: GetDiscussionDocument,
 		variables: params
 	});
@@ -46,12 +44,12 @@ export const getPost = async (params: GetDiscussionQueryVariables) => {
 };
 
 export const getPinnedProjects = async () => {
-	const { data } = await githubClient.query<GetPinnedProjectsQuery>({
+	const { data } = await ghClient.query<GetPinnedProjectsQuery>({
 		query: GetPinnedProjectsDocument
 	});
 	const pinnedProjects: PinnedProject[] = [];
 	for (const node of data.user!.pinnedItems.nodes || []) {
-		if (!!node) pinnedProjects.push(node);
+		if (node) pinnedProjects.push(node);
 	}
 	return pinnedProjects;
 };

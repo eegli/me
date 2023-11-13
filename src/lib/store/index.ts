@@ -1,5 +1,5 @@
+import type { PinnedProject, PostPreview, PostsPagination } from '$api/get';
 import { writable } from 'svelte/store';
-import type { PostPreview, PostsPagination } from '../api/get';
 
 export const postsPreviews = (() => {
 	const { subscribe, update } = writable<Map<string, PostPreview>>(new Map());
@@ -15,6 +15,9 @@ export const postsPreviews = (() => {
 		}
 	};
 })();
+
 export const postsPagination = writable<PostsPagination>({
 	hasNextPage: false
 });
+
+export const pinnedProjects = writable<PinnedProject[]>([]);
