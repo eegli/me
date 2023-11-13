@@ -1,10 +1,13 @@
-import { getPosts } from '$api/get';
+import { getPinnedProjects, getPostPreviews } from '../lib/api/get';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async () => {
-	const { pageInfo, posts } = await getPosts();
+	const projects = await getPinnedProjects();
+	const { postsPagination, postPreviews } = await getPostPreviews({ first: 1 });
+
 	return {
-		posts,
-		pageInfo
+		postPreviews,
+		postsPagination,
+		projects
 	};
 };

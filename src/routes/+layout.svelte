@@ -1,14 +1,19 @@
 <script lang="ts">
 	import 'highlight.js/styles/github-dark-dimmed.min.css';
 	import '../app.css';
-	import { pagination, posts } from '../lib/store';
+	import NavBar from '../lib/components/NavBar.svelte';
+	import { postsPagination, postsPreviews } from '../lib/store';
 	import type { LayoutServerData } from './$types';
 
 	export let data: LayoutServerData;
-	posts.addMany(data.posts);
-	$pagination = data.pageInfo;
+	postsPreviews.addMany(data.postPreviews);
+	$postsPagination = data.postsPagination;
+	console.log(data.projects);
 </script>
 
-<main>
-	<slot />
+<main class="min-w-2xl max-w-5xl mx-auto">
+	<NavBar />
+	<div class="px-5">
+		<slot />
+	</div>
 </main>

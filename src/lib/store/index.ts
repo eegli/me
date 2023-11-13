@@ -1,15 +1,11 @@
-import type { Discussion, Maybe, PageInfo } from '@octokit/graphql-schema';
 import { writable } from 'svelte/store';
+import type { PostPreview, PostsPagination } from '../api/get';
 
-export const isPost = (post?: Maybe<Discussion>): post is Discussion => {
-	return post !== null && post !== undefined;
-};
-
-export const posts = (() => {
-	const { subscribe, update } = writable<Map<string, Discussion>>(new Map());
+export const postsPreviews = (() => {
+	const { subscribe, update } = writable<Map<string, PostPreview>>(new Map());
 	return {
 		subscribe,
-		addMany: (posts: Discussion[]) => {
+		addMany: (posts: PostPreview[]) => {
 			update((map) => {
 				posts.forEach((post) => {
 					map.set(post.id, post);
@@ -19,7 +15,6 @@ export const posts = (() => {
 		}
 	};
 })();
-export const pagination = writable<PageInfo>({
-	hasNextPage: false,
-	hasPreviousPage: false
+export const postsPagination = writable<PostsPagination>({
+	hasNextPage: false
 });

@@ -1,0 +1,71 @@
+query getPinnedProjects {
+	user(login: "eegli") {
+		pinnedItems(first: 6, types: REPOSITORY) {
+			nodes {
+				... on Repository {
+					name
+					description
+					owner {
+						login
+					}
+					description
+					stargazerCount
+					primaryLanguage {
+						name
+					}
+					url
+				}
+			}
+		}
+	}
+}
+
+query getDiscussions($first: Int = 10, $after: String) {
+	repository(owner: "eegli", name: "me") {
+		discussions(first: $first, after: $after, orderBy: { field: CREATED_AT, direction: DESC }) {
+			edges {
+				cursor
+				node {
+					id
+					category {
+						name
+						id
+					}
+					title
+					author {
+						login
+					}
+					createdAt
+				}
+			}
+			pageInfo {
+				endCursor
+				hasNextPage
+			}
+		}
+	}
+}
+
+query getDiscussion($discussionId: ID!) {
+	node(id: $discussionId) {
+		... on Discussion {
+			id
+			title
+			body
+			author {
+				login
+			}
+			createdAt
+			comments(first: 10) {
+				nodes {
+					id
+					body
+					author {
+						login
+					}
+					createdAt
+				}
+			}
+		}
+	}
+}
