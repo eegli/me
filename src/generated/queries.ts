@@ -30095,7 +30095,7 @@ export type WorkflowsParametersInput = {
 export type GetPinnedProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPinnedProjectsQuery = { __typename?: 'Query', user?: { __typename?: 'User', pinnedItems: { __typename?: 'PinnableItemConnection', nodes?: Array<{ __typename?: 'Gist' } | { __typename?: 'Repository', name: string, description?: string | null, stargazerCount: number, url: any, owner: { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, primaryLanguage?: { __typename?: 'Language', name: string } | null } | null> | null } } | null };
+export type GetPinnedProjectsQuery = { __typename?: 'Query', user?: { __typename?: 'User', pinnedItems: { __typename?: 'PinnableItemConnection', nodes?: Array<{ __typename?: 'Gist' } | { __typename?: 'Repository', name: string, description?: string | null, stargazerCount: number, url: any, owner: { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, primaryLanguage?: { __typename?: 'Language', color?: string | null, name: string } | null } | null> | null } } | null };
 
 export type GetDiscussionsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -30127,6 +30127,7 @@ export const GetPinnedProjectsDocument = gql`
           description
           stargazerCount
           primaryLanguage {
+            color
             name
           }
           url

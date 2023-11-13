@@ -5,14 +5,13 @@
 
 <div class="navbar bg-base-100">
 	<div class="flex-1">
-		<a href="/" class="btn btn-ghost normal-case text-xl"
-			>{onHomePage ? 'me' : ''}
-			{#if !onHomePage}
+		{#if !onHomePage}
+			<a href="/" class="btn btn-ghost text-xl normal-case">
 				<i class="fa-solid fa-arrow-left" />
-			{/if}
-		</a>
+			</a>
+		{/if}
 	</div>
-	<div class="flex-none flex mx-4">
+	<div class="mx-4 flex flex-none">
 		<a href="https://github.com/eegli" target="_blank" aria-label="GitHub link">
 			<i class="fa-brands fa-xl fa-github" />
 		</a>
